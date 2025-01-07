@@ -1,0 +1,10 @@
+camunda.bpm:
+  admin-user:
+    id: admin
+    password: admin
+    firstName: admin
+  filter:
+    create: All tasks
+  deployment-resource-pattern: classpath*:**/*.bpmn
+  default-serialization-format: application/json
+  generic-properties.properties.initializeTelemetry: false

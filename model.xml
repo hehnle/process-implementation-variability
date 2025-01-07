@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<graphics key="autolayoutconstraints" value="false"/>
+		<graphics key="legendautolayout" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="vertical"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="6"/>
+	</properties>
+	<struct>
+		<and mandatory="true" name="ParkingPermitWorkflow">
+			<and mandatory="true" name="Workflow">
+				<graphics key="collapsed" value="false"/>
+				<alt abstract="true" name="ParkingPermitApplication">
+					<graphics key="collapsed" value="false"/>
+					<feature name="ApplicationSimple"/>
+					<feature name="ApplicationCommmercialRegister"/>
+					<feature name="ApplicationCommercialRegisterCarInformation"/>
+				</alt>
+				<and abstract="true" name="ApplicationCheck">
+					<graphics key="collapsed" value="false"/>
+					<feature name="AutomaticApplicationCheck"/>
+					<feature name="ManualApplicationCheck"/>
+					<feature name="SimpleMapping"/>
+					<feature name="AggregationCode"/>
+				</and>
+				<alt abstract="true" mandatory="true" name="IssueParkingPermit">
+					<graphics key="collapsed" value="false"/>
+					<feature name="IssueParkingPermitSimple"/>
+					<feature name="IssueParkingPermitLicensePlates"/>
+				</alt>
+				<and abstract="true" name="ApplicantNotification">
+					<graphics key="collapsed" value="false"/>
+					<feature name="mail"/>
+					<feature name="manual"/>
+					<feature name="sms"/>
+				</and>
+			</and>
+			<and mandatory="true" name="DataStructures">
+				<graphics key="collapsed" value="false"/>
+				<feature name="CommercialRegister"/>
+				<feature name="CarInformation"/>
+			</and>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>ApplicationCommmercialRegister</var>
+				<var>CommercialRegister</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>ApplicationCommercialRegisterCarInformation</var>
+				<conj>
+					<var>CommercialRegister</var>
+					<var>CarInformation</var>
+				</conj>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>IssueParkingPermitLicensePlates</var>
+				<var>CarInformation</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>AutomaticApplicationCheck</var>
+				<var>CommercialRegister</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<conj>
+					<var>AutomaticApplicationCheck</var>
+					<not>
+						<var>ManualApplicationCheck</var>
+					</not>
+				</conj>
+				<conj>
+					<var>SimpleMapping</var>
+					<not>
+						<var>AggregationCode</var>
+					</not>
+				</conj>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<conj>
+					<not>
+						<var>AutomaticApplicationCheck</var>
+					</not>
+					<var>ManualApplicationCheck</var>
+				</conj>
+				<conj>
+					<var>SimpleMapping</var>
+					<not>
+						<var>AggregationCode</var>
+					</not>
+				</conj>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<conj>
+					<var>AutomaticApplicationCheck</var>
+					<var>ManualApplicationCheck</var>
+				</conj>
+				<conj>
+					<var>AggregationCode</var>
+					<not>
+						<var>SimpleMapping</var>
+					</not>
+				</conj>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>

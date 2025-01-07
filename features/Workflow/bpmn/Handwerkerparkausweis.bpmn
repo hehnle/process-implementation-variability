@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0so8gmf" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.9.0">
+  <bpmn:collaboration id="Collaboration_0eyb6l7">
+    <bpmn:participant id="Participant_0ze6zoa" name="Parking Permit Craftsperson" processRef="CraftsmanParkingPermit_Wf" />
+  </bpmn:collaboration>
+  <bpmn:process id="CraftsmanParkingPermit_Wf" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0bkbjp5">
+      <bpmn:lane id="Lane_077gcyr" name="Craftsperson">
+        <bpmn:flowNodeRef>StartEvent_0tftby6</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1vi0jnk" name="Clerk">
+        <bpmn:flowNodeRef>EndEvent_0cdecze</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_11qs664</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_0uw06vo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_0myerxt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1s393kq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0ug376q</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="SequenceFlow_156yqzg" sourceRef="SendTask_0myerxt" targetRef="EndEvent_0cdecze" />
+    <bpmn:startEvent id="StartEvent_0tftby6" name="parking permit required">
+      <bpmn:outgoing>Flow_0nnpym1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_0cdecze" name="parking permit issued">
+      <bpmn:incoming>SequenceFlow_156yqzg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1ya6e2w" sourceRef="ServiceTask_0uw06vo" targetRef="Event_11qs664" />
+    <bpmn:endEvent id="Event_11qs664" name="parking permit rejected">
+      <bpmn:incoming>Flow_1ya6e2w</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_03juncf" name="yes" sourceRef="Gateway_1s393kq" targetRef="SendTask_0myerxt">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${justified}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1kw74ic" name="no" sourceRef="Gateway_1s393kq" targetRef="ServiceTask_0uw06vo">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!justified}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0sn0mgx" sourceRef="Activity_0ug376q" targetRef="Gateway_1s393kq" />
+    <bpmn:sequenceFlow id="Flow_0nnpym1" sourceRef="StartEvent_0tftby6" targetRef="Activity_0ug376q" />
+    <bpmn:callActivity id="ServiceTask_0uw06vo" name="Notify craftsperson" calledElement="${process}" camunda:variableMappingDelegateExpression="${notificationVariableMapper}">
+      <bpmn:incoming>Flow_1kw74ic</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ya6e2w</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="${notificationPluginProvider.getProcessIds(execution)}" camunda:elementVariable="process" />
+    </bpmn:callActivity>
+    <bpmn:userTask id="SendTask_0myerxt" name="Issue parking permit" camunda:formKey="embedded:app:IssueParkingPermit.html">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="Vorname" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="1" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="lastName" label="Nachname" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="1" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="reason" label="Begründung" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="1" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="companyName" label="Name des Gewerbes" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="1" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="registrationNumber" label="Kennzeichen" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="1" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03juncf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_156yqzg</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1s393kq" name="application justified?">
+      <bpmn:incoming>Flow_0sn0mgx</bpmn:incoming>
+      <bpmn:outgoing>Flow_03juncf</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1kw74ic</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="Activity_0ug376q" name="Check application data" calledElement="${process}" camunda:variableMappingDelegateExpression="${applicationCheckVariableMapper}">
+      <bpmn:incoming>Flow_0nnpym1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sn0mgx</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="${applicationCheckPluginProvider.getProcessIds()}" camunda:elementVariable="process" />
+    </bpmn:callActivity>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0eyb6l7">
+      <bpmndi:BPMNShape id="Participant_0ze6zoa_di" bpmnElement="Participant_0ze6zoa" isHorizontal="true">
+        <dc:Bounds x="129" y="90" width="761" height="400" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1vi0jnk_di" bpmnElement="Lane_1vi0jnk" isHorizontal="true">
+        <dc:Bounds x="159" y="240" width="731" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_077gcyr_di" bpmnElement="Lane_077gcyr" isHorizontal="true">
+        <dc:Bounds x="159" y="90" width="731" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0nnpym1_di" bpmnElement="Flow_0nnpym1">
+        <di:waypoint x="248" y="160" />
+        <di:waypoint x="300" y="160" />
+        <di:waypoint x="300" y="370" />
+        <di:waypoint x="350" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sn0mgx_di" bpmnElement="Flow_0sn0mgx">
+        <di:waypoint x="450" y="370" />
+        <di:waypoint x="515" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kw74ic_di" bpmnElement="Flow_1kw74ic">
+        <di:waypoint x="540" y="395" />
+        <di:waypoint x="540" y="430" />
+        <di:waypoint x="630" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="549" y="410" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03juncf_di" bpmnElement="Flow_03juncf">
+        <di:waypoint x="540" y="345" />
+        <di:waypoint x="540" y="310" />
+        <di:waypoint x="630" y="310" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="561" y="293" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ya6e2w_di" bpmnElement="Flow_1ya6e2w">
+        <di:waypoint x="730" y="430" />
+        <di:waypoint x="802" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_156yqzg_di" bpmnElement="SequenceFlow_156yqzg">
+        <di:waypoint x="730" y="300" />
+        <di:waypoint x="802" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_0tftby6_di" bpmnElement="StartEvent_0tftby6">
+        <dc:Bounds x="212" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="196" y="185" width="71" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0cdecze_di" bpmnElement="EndEvent_0cdecze">
+        <dc:Bounds x="802" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="784" y="327.5" width="71" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11qs664_di" bpmnElement="Event_11qs664">
+        <dc:Bounds x="802" y="412" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="785" y="455" width="71" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13be3uc_di" bpmnElement="ServiceTask_0uw06vo">
+        <dc:Bounds x="630" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0z2ow1s_di" bpmnElement="SendTask_0myerxt">
+        <dc:Bounds x="630" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1s393kq_di" bpmnElement="Gateway_1s393kq" isMarkerVisible="true">
+        <dc:Bounds x="515" y="345" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="483" y="327" width="53" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1v0kr0b_di" bpmnElement="Activity_0ug376q">
+        <dc:Bounds x="350" y="330" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

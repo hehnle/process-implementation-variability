@@ -1,0 +1,73 @@
+<form role="form" name="form">
+	<script cam-script type="text/form-script">
+	    camForm.on('form-loaded', function() {
+	      camForm.variableManager.fetchVariable('application');
+	    });
+	    camForm.on('variables-restored', function() {
+	      $scope.application = camForm.variableManager.variableValue('application');
+	    });
+	  </script>
+
+	<h2>Parking Permit Application</h2>
+	<h3>Applicant</h3>
+	<table>
+		<tr>
+			<td>First Name:</td>
+			<td>{{application.applicant.firstName}}</td>
+		</tr>
+
+		<tr>
+			<td>Last Name:</td>
+			<td>{{application.applicant.lastName}}</td>
+		</tr>
+
+		<tr>
+			<td>Phone Number:</td>
+			<td>{{application.applicant.phoneNumber}}</td>
+		</tr>
+
+		<tr>
+			<td>E-Mail:</td>
+			<td>{{application.applicant.eMail}}</td>
+		</tr>
+	</table>
+	<h3>Company</h3>
+	<table>
+		<tr>
+			<td>Name:</td>
+			<td>{{application.company.name}}</td>
+		</tr>
+
+		<tr>
+			<td>Last Name:</td>
+			<td>{{application.company.street}}</td>
+		</tr>
+
+		<tr>
+			<td>Phone Number:</td>
+			<td>{{application.company.city}}</td>
+		</tr>
+
+		<tr>
+			<td>E-Mail:</td>
+			<td>{{application.company.zipCode}}</td>
+		</tr>
+	</table>
+	<h3>License Plates</h3>
+	<table>
+		<tr>
+			<td>License Plate 1:</td>
+			<td>{{application.carInformation.licensePlate1}}</td>
+		</tr>
+
+		<tr>
+			<td>License Plate 2:</td>
+			<td>{{application.carInformation.licensePlate2}}</td>
+		</tr>
+		
+				<tr>
+			<td>License Plate 3:</td>
+			<td>{{application.carInformation.licensePlate3}}</td>
+		</tr>
+	</table>
+</form>
