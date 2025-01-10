@@ -6,6 +6,8 @@ The business process "application for the special parking permit for craftsperso
 
 Frequently, in German municipalities craftspersons can apply for a special parking permit so that they don't have to buy a parking ticket every time they stop at a customer's premises.
 
+<img src="readme-img/process-parking-permit.png" width="900" title="Special Parking Permit Process">
+
 A plugin mechanism in combination with FeatureHouse is used to be able to select implementations for the activities of the business process during compile time, start time, and runtime.
 
 In order to use the project, FeatureIDE needs to be installed. Then, the project can be imported into FeatureIDE as maven project.
@@ -34,7 +36,7 @@ To start the application run the following maven command in the root of the dire
 
     mvn spring-boot:run -Dspring-boot.run.arguments=--excludeNotification=notification.mail
 
-Using the spring boot run arguments, implementations of certain activites may be excluded during startup.
+Using the spring boot run arguments, implementations of certain activities may be excluded during startup.
 
 
 ## Feature Binding at Runtime
@@ -56,7 +58,7 @@ password: admin
 
 ## Detailed Explanation
 
-A detailed explanation about the background, the variability mechanisms, and the usage can be found in the following paper:
+A detailed explanation about the background, the variability mechanisms, and the usage can be found in the following papers:
 
 * P. Hehnle, M. Reichert, Flexible process variant binding in information systems with software product line engineering, preprint (2024). arXiv:2410.17689. URL https://arxiv.org/abs/2410.17689
 * P. Hehnle, M. Reichert, Handling Process Variants in Information Systems with Software Product Line Engineering, in: 2023 IEEE 25th Conference on Business Informatics (CBI), 2023, pp. 1–10.
