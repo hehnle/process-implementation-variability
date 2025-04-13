@@ -119,5 +119,17 @@
 				</conj>
 			</imp>
 		</rule>
+		<rule>
+			<imp>
+				<var>ApplicationCommercialRegisterCarInformation</var>
+				<var>IssueParkingPermitLicensePlates</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>IssueParkingPermitLicensePlates</var>
+				<var>ApplicationCommercialRegisterCarInformation</var>
+			</imp>
+		</rule>
 	</constraints>
 </featureModel>
