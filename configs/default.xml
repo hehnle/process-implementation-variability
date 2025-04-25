@@ -3,22 +3,22 @@
 	<feature automatic="selected" name="ParkingPermitWorkflow"/>
 	<feature automatic="selected" name="Workflow"/>
 	<feature automatic="selected" name="ParkingPermitApplication"/>
-	<feature automatic="unselected" name="ApplicationSimple"/>
-	<feature manual="selected" name="ApplicationCommmercialRegister"/>
+	<feature manual="selected" name="ApplicationSimple"/>
+	<feature automatic="unselected" name="ApplicationCommmercialRegister"/>
 	<feature automatic="unselected" name="ApplicationCommercialRegisterCarInformation"/>
 	<feature automatic="selected" name="ApplicationCheck"/>
-	<feature manual="selected" name="AutomaticApplicationCheck"/>
+	<feature automatic="unselected" name="AutomaticApplicationCheck"/>
 	<feature manual="selected" name="ManualApplicationCheck"/>
-	<feature automatic="unselected" name="SimpleMapping"/>
-	<feature automatic="selected" name="AggregationCode"/>
+	<feature manual="selected" name="SimpleMapping"/>
+	<feature automatic="unselected" name="AggregationCode"/>
 	<feature automatic="selected" manual="selected" name="IssueParkingPermit"/>
-	<feature manual="selected" name="IssueParkingPermitSimple"/>
+	<feature automatic="selected" name="IssueParkingPermitSimple"/>
 	<feature automatic="unselected" name="IssueParkingPermitLicensePlates"/>
 	<feature automatic="selected" manual="selected" name="ApplicantNotification"/>
 	<feature manual="selected" name="mail"/>
 	<feature manual="selected" name="manual"/>
 	<feature manual="selected" name="sms"/>
 	<feature automatic="selected" name="DataStructures"/>
-	<feature automatic="selected" manual="selected" name="CommercialRegister"/>
+	<feature name="CommercialRegister"/>
 	<feature name="CarInformation"/>
 </configuration>
