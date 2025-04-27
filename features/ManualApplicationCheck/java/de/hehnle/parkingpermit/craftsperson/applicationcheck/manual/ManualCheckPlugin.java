@@ -1,10 +1,10 @@
 package de.hehnle.parkingpermit.craftsperson.applicationcheck.manual;
 
-import javax.inject.Named;
+import org.springframework.stereotype.Component;
 
 import de.hehnle.parkingpermit.craftsperson.interfaces.ApplicationCheckPlugin;
 
-@Named
+@Component 
 public class ManualCheckPlugin implements ApplicationCheckPlugin{
 
 	@Override

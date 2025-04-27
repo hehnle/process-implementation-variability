@@ -24,9 +24,6 @@ public class NotificationPluginRegistration {
 
 	public Map<String, String> getPluginLabelsById() {
 
-		System.out.println("//////////////excluded plugins");
-//		excludedPlugins.forEach(System.out::println);
-
 		Map<String, String> pluginLabelsById = new HashMap<String, String>();
 		for (NotificationPlugin plugin : plugins) {
 			if (!excludedPlugins.contains(plugin.getId())) {
@@ -35,14 +32,6 @@ public class NotificationPluginRegistration {
 		}
 
 		return pluginLabelsById;
-//		return plugins//
-//				.stream()//
-//				.filter(plugin -> !excludedPlugins.contains(plugin.getId()))//
-//				.collect(//
-//						Collectors.toMap(//
-//								NotificationPlugin::getId, //
-//								NotificationPlugin::getLabel)//
-//				);
 	}
 
 	public Map<String, String> getPluginProcessIdsByPluginId() {
@@ -55,14 +44,5 @@ public class NotificationPluginRegistration {
 		}
 
 		return pluginProcessIdsByPluginId;
-
-//		return plugins//
-//				.stream()//
-//				.filter(plugin -> !excludedPlugins.contains(plugin.getId()))//
-//				.collect(//
-//						Collectors.toMap(//
-//								NotificationPlugin::getId, //
-//								NotificationPlugin::getProcessId)//
-//				);
 	}
 }

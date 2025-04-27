@@ -31,14 +31,5 @@ public class ApplicationCheckPluginRegistration {
 		}
 		
 		return pluginProcessIdsByPluginId;
-
-//		return plugins//
-//				.stream()//
-//				.filter(plugin -> !excludedPlugins.contains(plugin.getId()))//
-//				.collect(//
-//						Collectors.toMap(//
-//								ApplicationCheckPlugin::getId, //
-//								ApplicationCheckPlugin::getProcessId)//
-//				);
 	}
 }

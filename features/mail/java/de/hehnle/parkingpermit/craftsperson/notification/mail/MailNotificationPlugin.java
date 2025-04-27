@@ -1,10 +1,10 @@
 package de.hehnle.parkingpermit.craftsperson.notification.mail;
 
-import javax.inject.Named;
+import org.springframework.stereotype.Component;
 
 import de.hehnle.parkingpermit.craftsperson.interfaces.NotificationPlugin;
 
-@Named
+@Component 
 public class MailNotificationPlugin implements NotificationPlugin{
 
 	@Override

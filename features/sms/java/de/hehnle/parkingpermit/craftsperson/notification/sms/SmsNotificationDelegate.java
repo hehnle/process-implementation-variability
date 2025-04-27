@@ -1,13 +1,13 @@
 package de.hehnle.parkingpermit.craftsperson.notification.sms;
 
-import javax.inject.Named;
+import org.springframework.stereotype.Component;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 import de.hehnle.parkingpermit.craftsperson.entities.Application;
 
-@Named
+@Component 
 public class SmsNotificationDelegate implements JavaDelegate {
 
 	@Override
